@@ -12,16 +12,19 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Set collaborators-only interaction limit
+        # Requires REPO_ADMIN_TOKEN secret: a PAT with Administration:write
+        # (fine-grained) or repo scope (classic). GITHUB_TOKEN cannot call
+        # the interaction-limits endpoint.
         run: |
           gh api --method PUT \
             repos/${{ github.repository }}/interaction-limits \
             --field limit=collaborators_only \
             --field expiry=six_months
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.REPO_ADMIN_TOKEN }}
 
       - name: Confirm
         run: |
           gh api repos/${{ github.repository }}/interaction-limits
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.REPO_ADMIN_TOKEN }}
