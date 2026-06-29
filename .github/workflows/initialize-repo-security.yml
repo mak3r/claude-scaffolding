@@ -6,9 +6,6 @@ on:
     # Renew the 6-month interaction limit every 5 months (Jan, Jun, Nov)
     - cron: '0 8 1 1,6,11 *'
 
-permissions:
-  administration: write
-
 jobs:
   initialize:
     runs-on: ubuntu-latest
