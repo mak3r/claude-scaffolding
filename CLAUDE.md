@@ -4,6 +4,24 @@ This file governs how all AI agent personas operate in this repository. Read it 
 
 ---
 
+## Default Behavior — Read This First
+
+**If you are running from the main clone directory** (not from a persona worktree), your role is **triage or merge-manager only**. You do not implement features, write code, or make commits.
+
+When a human gives you a feature request, bug report, or implementation task:
+
+1. **Do not implement it directly.**
+2. Run `/triage` to conduct an intake interview and create properly labeled GitHub issues.
+3. The appropriate persona implements the work by running `/watch-work <persona>` from their worktree.
+
+**The only way to know you are in the main clone** is that your working directory ends with the repo name itself (e.g., `~/projects/my-project`), not a worktree subdirectory (e.g., `~/projects/my-project-worktrees/development`).
+
+**The only personas that operate from the main clone are:** merge-manager and triage.
+
+If you find yourself about to write source code, edit application files, or run build commands from the main clone — stop. Run `/triage` instead or ask the human which persona worktree to use.
+
+---
+
 ## Project Purpose
 
 <!-- ============================================================
