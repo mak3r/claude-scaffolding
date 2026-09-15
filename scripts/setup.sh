@@ -148,13 +148,21 @@ echo "── Phase 4: Branch protection ──"
 # Protect main
 # No PR review requirement — all personas share one GitHub account, making
 # peer review impossible. The merge-manager enforces quality gates via CI.
+# strict:false (not true) — the develop->main release flow merges with
+# `gh pr merge --merge`, which creates a commit on main that's never replayed
+# back into develop, so a strict up-to-date check blocks every release after
+# the first with "head branch is not up to date with base branch" even
+# though the content is identical. The release workflow re-gates with
+# make test + make quality against the tagged commit before publishing, so
+# this isn't losing a safety net — just avoiding a structural false-positive
+# block on the PR merge button.
 echo "Setting branch protection on: main"
 gh api --method PUT \
   "repos/$GITHUB_REPO/branches/main/protection" \
   --input - << 'EOF'
 {
   "required_status_checks": {
-    "strict": true,
+    "strict": false,
     "contexts": ["build-and-test", "secret-scan"]
   },
   "enforce_admins": false,
